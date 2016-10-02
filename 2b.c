@@ -12,6 +12,9 @@ int main(int argc, char **argv)
 		pid_t pid = fork ();
 		if (pid == 0) {
 			printf("I am a child and my PID is: %d\n", getpid());
+/*
+ * вокруг бинарных операторов ставьте пробелы: i+1 --> i + 1
+ */
 			sleep(i+1);
 			printf("%d\n", i);
 		} if (pid != 0) {
