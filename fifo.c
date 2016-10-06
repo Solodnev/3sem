@@ -25,8 +25,8 @@ int main(int argc, char **argv)
 				printf("Can\'t create FIFO\n");
 				exit(-1);
 			}
-		} 	
-	}	
+		}
+	}
 	userIndex = atoi(argv[1]);
 	int fdRead, fdWrite;
 	if (userIndex == 0)
@@ -42,7 +42,7 @@ int main(int argc, char **argv)
 	result = fork();
 	if (result > 0)
 	{
-		while (10)
+		while (1)
 		{
 			fgets(str, 200, stdin);
 			int bytesWritten = 
@@ -54,7 +54,11 @@ int main(int argc, char **argv)
 	}
 	else
 	{
-		while(10);
+    /*
+     * У вас точка с запятой была после  while ...
+     * Без неё все нормально работает
+     */
+		while (1)
 		{
 			int bytesRead = read(fdRead, str, 200);
 			printf("read %d\n", bytesRead);
