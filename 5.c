@@ -37,6 +37,9 @@ int main(int argc, char **argv)
 			}
 			is_odd = 1;
 		}
+		/*
+     * кривенько эти strtok'и и is_odd тут выглядят: впихнули бы внутрь split'а всё для единообразия.
+     */
         pch = strtok(NULL, "\n");
 	}
 
@@ -86,6 +89,9 @@ int read_file(const char* filename, char** buf_addr, int* len)
 
     *len = ftell(stream);
     rewind(stream);
+    /*
+     * очень крутой у вас read_file :)
+     */
     char* buffer = (char*) calloc(*len, sizeof(*buffer));
     fread(buffer, *len, sizeof(*buffer), stream);
     fclose(stream);
