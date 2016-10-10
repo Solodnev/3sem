@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 
 	char* pch = strtok(file_content, "\n");
     while (pch != NULL)
-    {
+    { 
 		if (is_odd)
 		{
 			timing = atoi(pch);
