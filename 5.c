@@ -4,6 +4,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+char** split(char* str);
 int read_file(const char* filename, char** buf_addr, int* len);
 
 int main(int argc, char **argv)
@@ -27,43 +28,7 @@ int main(int argc, char **argv)
 			pid_t pid = fork();
 			if (pid == 0)
 			{
-				char* command = strdup(pch);
-				char* pch2 = command;
-				int spaces = 0;
-/*
- * вы не делали отдельную ф-ю Split, поэтому сейчас у вас "солянка" в коде.
- */
-				while (*pch2 != '\0')
-				{
-					if (*pch2 == ' ')
-					    ++spaces;
-					++pch2;
-				}
-				char** args = (char**) calloc(spaces + 2, sizeof(*args));
-				pch2 = command;
-				char* start_command = pch2;
-				int index = 0;
-/*
- * вы фактически сами здесь реализуете функционал strtok'а.
- * всегда стараются использовать стандартную ф-ю, а не "изобретать свой велосипед", если он заведомо не лучше.
- * 
- * FIXIT:
- * вынесите в отдельную ф-ю все куски кода, которые отвечают за разбиение строки на отдельные слова (можете текущую реализацию оставить).
- */
-				while (*pch2 != '\0')
-				{
-					if (*pch2 == ' ')
-					{
-						args[index] = start_command;
-						++index;
-						*pch2 = '\0';
-						start_command = pch2 + 1;
-					}
-					++pch2;
-				}
-				args[index] = start_command;
-				++index;
-				args[index] = NULL;
+				char** args = split(pch);
 				printf("Wait '%d'\n", timing);
 				sleep(timing);
 				printf("I am running program '%s'\n", args[0]);
@@ -77,6 +42,38 @@ int main(int argc, char **argv)
 
 	free(file_content);
 	return 0;
+}
+
+char** split(char* str)
+{
+	char* string = strdup(str);
+	char* pch = string;
+	int spaces = 0;
+	while (*pch != '\0')
+	{
+		if (*pch == ' ')
+			++spaces;
+		++pch;
+	}
+	char** result = (char**) calloc(spaces + 2, sizeof(*result));
+	pch = string;
+	char* start_string = pch;
+	int index = 0;
+	while (*pch != '\0')
+	{
+		if (*pch == ' ')
+		{
+			result[index] = start_string;
+			++index;
+			*pch = '\0';
+			start_string = pch + 1;
+		}
+		++pch;
+	}
+	result[index] = start_string;
+	++index;
+	result[index] = NULL;
+	return result;
 }
 
 int read_file(const char* filename, char** buf_addr, int* len)
@@ -95,3 +92,4 @@ int read_file(const char* filename, char** buf_addr, int* len)
     *buf_addr = buffer;
     return 0;
 }
+
