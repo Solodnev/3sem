@@ -1,0 +1,93 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <unistd.h>
+#include <math.h>
+#include <pthread.h>
+
+#define quantity 10000000
+
+void * function(void * argument)
+
+
+float array_of_average[N] = {};
+float array_of_dispersion[N] = {};
+float array [quantity];
+
+interval = count / N;
+
+
+
+int main()
+{
+    pthread_t thread_id[N] = {0};
+    scanf("%d", &N);
+    float average = 0;
+    float dispersion = 0;
+    float beginning_of_time = 0;
+    float end_of_time = 0;
+    int i = 0;
+    int result = 0;
+    int gran[N];
+  	for (i = 0; i < N; ++i)
+		gran[i] = i;
+    beginning_of_time = clock();
+
+    for (i = 0; i < count; ++i)
+		array[i] = (random ());
+
+    for(i = 0;i < N; i++)
+
+    {
+		result = pthread_create (&thread_id[i], (pthread_attr_t *) NULL, function, &gran[i]);
+        if(result)
+        {
+            printf("");
+            exit(-1);
+        }
+    }
+    for(i = 0; i < N; i++)
+    {
+        pthread_join(thread_id[i] , (void **) NULL);
+    }
+    for (i = 0;i < N; i++)
+    {
+        average += average[i];
+        dispersion += dispersion[i];
+    }
+    average = average / N;
+    dispersion = dispersion / N;
+	  average /= N;
+	  dispersion /= N;
+	  dispersion = sqrt (dispersion);
+    end_of_time = clock ();
+    printf("%d threads: average = %.5f, dispersion = %.5f.\n",
+            N, average, dispersion);
+
+    return 0;
+}
+
+void * function(void * argument)
+{
+    float sum = 0;
+    float average = 0;
+    float dispersion = 0;
+    int start = interval * (*(int *)argument);
+    int end = interval * (*(int *)argument + 1);
+
+
+
+    for (i = start; i < end; i++)
+    {
+        sum += array[i];
+		dispersion += (array[i] - average) * (array[i] - average);
+    }
+    average = sum / (end - start);
+	  average[*(int *)argument] = average;
+    dispersion *= N;
+	  dispersion /= count;
+	  dispersion[*(int *)arg] = sqrt (disp);
+    return;
+}
+
+
