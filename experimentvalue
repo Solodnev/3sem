@@ -5,14 +5,17 @@
 #include <math.h>
 #include <pthread.h>
 
+/*
+ * Этот код списан. Впопыхах сделаны попытки видоизменить код без последующей проверки, что после них он скомпилируется ...
+ */
+
 #define quantity 10000000
 
 void * function(void * argument)
 
-
 float array_of_average[N] = {};
 float array_of_dispersion[N] = {};
-float array [quantity];
+float array[quantity];
 
 interval = count / N;
 
@@ -75,8 +78,6 @@ void * function(void * argument)
     int start = interval * (*(int *)argument);
     int end = interval * (*(int *)argument + 1);
 
-
-
     for (i = start; i < end; i++)
     {
         sum += array[i];
@@ -87,7 +88,7 @@ void * function(void * argument)
     dispersion *= N;
 	  dispersion /= count;
 	  dispersion[*(int *)arg] = sqrt (disp);
-    return;
+    return NULL;
 }
 
 
