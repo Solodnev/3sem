@@ -1,0 +1,34 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <dirent.h>
+#include <string.h>
+
+void findindir(char* path, int deep, char* fname){
+	if(!deep)
+		return;
+	DIR *dir;
+	struct dirent *rsd;
+	dir = opendir(path);
+	char tmp[1024];
+	while((rsd = readdir(dir))){
+        if(!strcmp(rsd->d_name, ".") || !strcmp(rsd->d_name, ".."))
+            continue;
+        strcpy(tmp, path); strcat(tmp, "/"); strcat(tmp, rsd->d_name);
+		if(rsd->d_type != 4 && !strcmp(rsd->d_name, fname))
+			printf("%s\n", tmp);
+        if(rsd->d_type == 4){
+            findindir(tmp, deep - 1, fname);
+        }
+        strcpy(tmp, "");
+    }
+    closedir(dir);
+}
+
+int main(int argc, char* argv[]){
+	if (argc == 4){
+		//printf("%s %s %d %s\n", argv[0], argv[1], atoi(argv[2]), argv[3]);
+		findindir(argv[1], atoi(argv[2]), argv[3]);
+	}
+	
+}
